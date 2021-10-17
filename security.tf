@@ -1,5 +1,5 @@
 module "loadbalancer" {
-  source      = "github.com/terraform-aws-modules/terraform-aws-security-group?ref=v1.13.0"
+  source      = "github.com/terraform-aws-modules/terraform-aws-security-group"
   name        = "project"
   description = "443 to Loadbalancer"
 
@@ -29,7 +29,7 @@ module "loadbalancer" {
 
 
 module "secgrp2" {
-  source      = "github.com/terraform-aws-modules/terraform-aws-security-group?ref=v1.13.0"
+  source      = "github.com/terraform-aws-modules/terraform-aws-security-group"
   name        = "project"
   description = "allow 80 to ASG"
 

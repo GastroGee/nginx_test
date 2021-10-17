@@ -25,10 +25,6 @@ variable "max_size" {
     default = 3
 }
 
-variable "termination_policies" {
-    default = default
-}
-
 variable "health_check_type" {
     default = "EC2"
 }
