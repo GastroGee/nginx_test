@@ -1,13 +1,13 @@
-data "aws_acm_certificate" "certificate" {
-  domain   = var.cert_name
-  statuses = ["ISSUED"]
-}
+# data "aws_acm_certificate" "certificate" {
+#   domain   = var.cert_name
+#   statuses = ["ISSUED"]
+# }
 
 resource "aws_lb" "project" {
   name     = "project"
 
-  security_groups = ["${module.secgrp.this_security_group_id}"]
-  subnets = [ var.subnet_ids]
+  security_groups = ["${module.loadbalancer.security_group_id}"]
+  subnets = [ module.vpc.private_subnets]
 
 #  load_balancer_type         = "network"
   enable_deletion_protection = false
@@ -34,11 +34,11 @@ resource "aws_lb_target_group" "project" {
 
 resource "aws_lb_listener" "project" {
   load_balancer_arn = "${aws_lb.project.arn}"
-  port              = "443"
-  protocol          = "HTTPS"
+  port              = "80"
+  protocol          = "HTTP"
 
-  ssl_policy        = "ELBSecurityPolicy-TLS-1-2-2017-01"
-  certificate_arn   = "${data.aws_acm_certificate.project.arn}"
+  # ssl_policy        = "ELBSecurityPolicy-TLS-1-2-2017-01"
+  # certificate_arn   = "${data.aws_acm_certificate.project.arn}"
 
   default_action {
     target_group_arn = "${aws_lb_target_group.project.arn}"

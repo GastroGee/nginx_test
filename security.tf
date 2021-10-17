@@ -16,9 +16,9 @@ module "loadbalancer" {
   ingress_with_cidr_blocks = [
     {
       cidr_blocks = "0.0.0.0/0"
-      description = "icmp"
-      from_port   = 443
-      to_port     = 443
+      description = "http"
+      from_port   = 80
+      to_port     = 80
       protocol    = "tcp"
     },
   ]
@@ -28,7 +28,7 @@ module "loadbalancer" {
 
 
 
-module "secgrp2" {
+module "asg" {
   source      = "github.com/terraform-aws-modules/terraform-aws-security-group"
   name        = "project"
   description = "allow 80 to ASG"

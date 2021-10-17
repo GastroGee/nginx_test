@@ -22,6 +22,10 @@ variable "min_size" {
 }
 
 variable "max_size" {
+    default = 5
+}
+
+variable "desired_size" {
     default = 3
 }
 
@@ -37,7 +41,7 @@ variable "wait_for_capacity_timeout" {
     default = "10m"
 }
 
-variable "dns_zone_name" {}
+# variable "dns_zone_name" {}
 
 
 variable "allowed_incoming_ssh" {
