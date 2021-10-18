@@ -27,13 +27,11 @@ resource "aws_autoscaling_group" "project" {
   launch_configuration        = "${aws_launch_configuration.project.name}"
 
   name_prefix                 = "project"
-  availability_zones          = ["${module.vpc.azs}"]
-  #vpc_zone_identifier         = ["${data.aws_subnet.subnets.*.id}"]
+  availability_zones          = flatten([module.vpc.azs])
 
   min_size                      = "${var.min_size}"
   max_size                      = "${var.max_size}"
   desired_capacity              = "${var.desired_size}"
- # termination_policies          = ["${var.termination_policies}"]
   target_group_arns             = ["${aws_lb_target_group.project.arn}"]
 
   health_check_type         = "${var.health_check_type}"

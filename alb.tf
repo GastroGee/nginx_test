@@ -1,13 +1,9 @@
-# data "aws_acm_certificate" "certificate" {
-#   domain   = var.cert_name
-#   statuses = ["ISSUED"]
-# }
 
 resource "aws_lb" "project" {
   name     = "project"
 
   security_groups = ["${module.loadbalancer.security_group_id}"]
-  subnets = [ module.vpc.private_subnets]
+  subnets = [ "${element(module.vpc.private_subnets, var.desired_size)}" ]
 
 #  load_balancer_type         = "network"
   enable_deletion_protection = false
