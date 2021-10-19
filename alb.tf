@@ -17,7 +17,7 @@ resource "aws_lb_target_group" "project" {
   vpc_id = "${module.vpc.vpc_id}"
 
   health_check {
-    path                = "/nginx_status"
+    path                = "/"
     protocol            = "HTTP"
     port                = "80"
     interval            = "30"
@@ -33,8 +33,6 @@ resource "aws_lb_listener" "project" {
   port              = "80"
   protocol          = "HTTP"
 
-  # ssl_policy        = "ELBSecurityPolicy-TLS-1-2-2017-01"
-  # certificate_arn   = "${data.aws_acm_certificate.project.arn}"
 
   default_action {
     target_group_arn = "${aws_lb_target_group.project.arn}"

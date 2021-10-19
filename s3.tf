@@ -3,15 +3,19 @@ resource "aws_s3_bucket" "project" {
   acl    = "private"
 
   tags = {
-    Name        = "My bucket"
-    Environment = "Dev"
+    Name        = "project"
+    Environment = "testing"
   }
 }
 
-resource "aws_s3_bucket_object" "project" {
+resource "aws_s3_bucket_object" "conf" {
   bucket = "${aws_s3_bucket.project.arn}"
   key    = "webconf"
   source = "${file("${path.module}/templates/web.conf")}"
 }
 
-
+resource "aws_s3_bucket_object" "index" {
+  bucket = "${aws_s3_bucket.project.arn}"
+  key    = "webconf"
+  source = "${file("${path.module}/templates/index.html")}"
+}

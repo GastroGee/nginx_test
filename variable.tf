@@ -41,13 +41,7 @@ variable "wait_for_capacity_timeout" {
     default = "10m"
 }
 
-# variable "dns_zone_name" {}
-
 
 variable "allowed_incoming_ssh" {
-    default = "162.12.23.34/32"
-}
-
-variable "region" {
-    default = ""
+    default = "0.0.0.0/0"
 }
