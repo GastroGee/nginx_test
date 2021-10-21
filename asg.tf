@@ -1,16 +1,10 @@
 
 data "template_file" "nginx" {
   template = "${file("${path.module}/templates/nginx.sh")}"
-
-  vars = {
-    nginx_version           = "${var.nginx_version}"
-    s3_bucket               = "${aws_s3_bucket.project.bucket_domain_name}"
-  }
 }
 
-
 resource "aws_launch_configuration" "project" {
-  name_prefix                 = "project"
+  name_prefix                 = "${terraform.workspace}-nginx"
   image_id                    = "${var.image_id}"
   instance_type               = "${var.instance_type}"
   iam_instance_profile        = "${aws_iam_instance_profile.project.name}"
@@ -27,7 +21,7 @@ resource "aws_autoscaling_group" "project" {
   launch_configuration        = "${aws_launch_configuration.project.name}"
 
   name_prefix                 = "project"
-  availability_zones          = flatten([module.vpc.azs])
+  availability_zones          = flatten([module.vpc.private_subnets])
 
   min_size                      = "${var.min_size}"
   max_size                      = "${var.max_size}"
@@ -42,7 +36,6 @@ resource "aws_autoscaling_group" "project" {
     create_before_destroy = true
   }
 }
-
 
 resource "aws_autoscaling_attachment" "project" {
   autoscaling_group_name = "${aws_autoscaling_group.project.id}"

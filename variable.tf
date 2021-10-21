@@ -14,7 +14,7 @@ variable "instance_type" {
 }
 
 variable "ssh_keyname" {
-    default = "cdd-test-us-east-1"
+    default = "test"
 }
 
 variable "min_size" {

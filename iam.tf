@@ -1,5 +1,5 @@
 resource "aws_iam_role" "project" {
-  name = "project"
+  name = "${terraform.workspace}-nginx"
 
   assume_role_policy = <<EOF
 {
@@ -20,13 +20,13 @@ resource "aws_iam_role" "project" {
 
 //  Create a instance profile for the role.
 resource "aws_iam_instance_profile" "project" {
-  name = "project"
+  name = "${terraform.workspace}-nginx"
   role = "${aws_iam_role.project.name}"
 }
 
 // This policy allows an instance access to parameter store, cloud watch etc
 resource "aws_iam_role_policy" "project" {
-  name   = "project"
+  name   = "${terraform.workspace}-nginx"
   role   = "${aws_iam_role.project.id}"
   policy = "${file("${path.module}/templates/iam.json")}"
 }
