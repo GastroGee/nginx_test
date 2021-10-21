@@ -1,7 +1,7 @@
 module "loadbalancer" {
   source      = "github.com/terraform-aws-modules/terraform-aws-security-group"
   name        = "project"
-  description = "443 to Loadbalancer"
+  description = "80 to Loadbalancer"
 
   egress_with_cidr_blocks = [
     {
@@ -27,7 +27,6 @@ module "loadbalancer" {
 }
 
 
-
 module "asg" {
   source      = "github.com/terraform-aws-modules/terraform-aws-security-group"
   name        = "project"
@@ -50,13 +49,6 @@ module "asg" {
       from_port   = 22
       to_port     = 22
       protocol    = "tcp"
-    },
-    {
-      cidr_blocks = "0.0.0.0/0"
-      description = "icmp"
-      from_port   = -1
-      to_port     = -1
-      protocol    = "icmp"
     },
     {
       cidr_blocks = "0.0.0.0/0"

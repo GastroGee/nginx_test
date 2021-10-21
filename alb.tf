@@ -1,13 +1,11 @@
-
 resource "aws_lb" "project" {
   name     = "${terraform.workspace}-nginx"
 
   security_groups = ["${module.loadbalancer.security_group_id}"]
-  subnets = flatten([module.vpc.private_subnets])
+  subnets = flatten([module.vpc.public_subnets])
 
   enable_deletion_protection = false
 }
-
 resource "aws_lb_target_group" "project" {
   name     = "${terraform.workspace}-nginx"
   port     = 80

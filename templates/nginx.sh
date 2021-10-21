@@ -2,15 +2,17 @@
 ## i am  assuming that the EC2 image is ubuntu
 ## variables
 
+
 sudo apt-get update
 
-sudo apt-get install nginx
+sudo apt-get -y install nginx
 
+echo "updating default root html file for nginx"
 sudo tee /var/www/html/index.nginx-debian.html > /dev/null <<EOF
 <!DOCTYPE html>
 <html>
 <head>
-<title>Hello World</title>
+<title>Hello World!</title>
 <style>
     body {
         width: 35em;
@@ -20,18 +22,14 @@ sudo tee /var/www/html/index.nginx-debian.html > /dev/null <<EOF
 </style>
 </head>
 <body>
-<h1>Hello Universe</h1>
+<h1> Hello World </h1></h1>
 <p>If you see this page, the nginx web server is successfully installed and
 working. Further configuration is required.</p>
-
-<p>For online documentation and support please refer to
-<a href="http://nginx.org/">nginx.org</a>.<br/>
-Commercial support is available at
-<a href="http://nginx.com/">nginx.com</a>.</p>
 
 <p><em>Thank you for using nginx.</em></p>
 </body>
 </html>
-EOF 
+EOF
+
 
 sudo service nginx restart

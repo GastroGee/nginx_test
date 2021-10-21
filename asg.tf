@@ -1,4 +1,3 @@
-
 data "template_file" "nginx" {
   template = "${file("${path.module}/templates/nginx.sh")}"
 }
@@ -11,6 +10,7 @@ resource "aws_launch_configuration" "project" {
   key_name                    = "${var.ssh_keyname}"
   user_data                   = "${data.template_file.nginx.rendered}"
   security_groups             = ["${module.asg.security_group_id}"]
+  associate_public_ip_address = true
 
   lifecycle {
     create_before_destroy = true
@@ -21,7 +21,7 @@ resource "aws_autoscaling_group" "project" {
   launch_configuration        = "${aws_launch_configuration.project.name}"
 
   name_prefix                 = "project"
-  availability_zones          = flatten([module.vpc.private_subnets])
+  vpc_zone_identifier         = flatten([module.vpc.public_subnets])
 
   min_size                      = "${var.min_size}"
   max_size                      = "${var.max_size}"
